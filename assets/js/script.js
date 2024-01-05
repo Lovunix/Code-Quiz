@@ -20,7 +20,7 @@ const questionsLocal = [
         c: "Berlin",
         d: "Madrid",
       },
-      correctAnswer: "b",
+      correctAnswer: "Paris",
     },
     {
       question: "What is the largest planet in our solar system?",
@@ -30,7 +30,7 @@ const questionsLocal = [
         c: "Jupiter",
         d: "Saturn",
       },
-      correctAnswer: "c",
+      correctAnswer: "Jupiter",
     },
   ];
 
