@@ -3,7 +3,10 @@ const timerDisplay = document.getElementById("timer");
 const feedbackEl= document.querySelector(".feedback-answer");
 const feedbackResEl = document.querySelector(".feedback-result")
 const answerButtons = document.querySelectorAll(".answer-button");
-
+const collquestions = document.getElementById("collapsequestions");
+const globalREl = document.querySelector(".global-results")
+const nameEl = document.getElementById("name");
+const namepEl = document.getElementById("namep");
 
 const questionsLocal = [
     {
@@ -38,8 +41,8 @@ let intervalId;
 
 
 function startGame() {
-    isWin = false;
     startButton.disabled = true;
+    namepEl.textContent = '';
     displayQuestion();
     startTimer();
     addButtonListeners();
@@ -123,38 +126,34 @@ function quizEnd() {
     feedbackResEl.textContent = "YOU WON!!!🏆 ";
     clearInterval(intervalId);
     timerDisplay.textContent = "You Won";
+    startButton.disabled = false;
+    startButton.textContent = "Start Over";
+    startButton.addEventListener('click', starover)
     feedbackEl.textContent = '';
-    setWins()
+    setRecord()
   }
-  
+
   // The loseGame function is called when timer reaches 0
   function loseGame() {
     feedbackEl.textContent = '';
+    clearInterval(intervalId);
     feedbackResEl.textContent = "GAME OVER";
-    loseCounter++
+    timerDisplay.textContent = "Try again";
     startButton.disabled = false;
     startButton.textContent = "Try Again";
     startButton.addEventListener('click', starover)
-    setLosses()
+    setRecord()
   }
-
 
 
   // Updates win count on screen and sets win count to client storage
-function setWins() {
+function setRecord() {
+    collquestions.textContent = " ";
+    name2record = nameEl.value;
+    globalREl.textContent = name2record + "  Your results will be record like this" + " Correct Answers  " + winCounter + "   " + "  Incorrect Answers " + loseCounter;
+    localStorage.setItem("Record for", name2record + "wins  " +  winCounter + "losses  " + loseCounter);
 
-    win.textContent = winCounter;
-    localStorage.setItem("winCount", winCounter);
-  }
-  
-  // Updates lose count on screen and sets lose count to client storage
-  function setLosses() {
-
-    lose.textContent = loseCounter;
-    localStorage.setItem("loseCount", loseCounter);
-  }
-
-
+ }
 // Event listener for the start button that will trigger displayquestion
 
 startButton.addEventListener("click", startGame);
