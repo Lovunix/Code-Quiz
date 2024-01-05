@@ -14,6 +14,7 @@
 const startButton = document.getElementById("start-button");
 const timerDisplay = document.getElementById("timer");
 const feedbackEl= document.querySelector(".feedback-answer");
+const feedbackResEl = document.querySelector(".feedback-result")
 
 
 const questionsLocal = [
@@ -45,6 +46,28 @@ let score = 0;
 let timeRemaining = 60;
 let winCounter = 0;
 let loseCounter = 0;
+let intervalId;
+
+
+function startGame() {
+    isWin = false;
+    startButton.disabled = true;
+    displayQuestion();
+    startTimer()
+   }
+
+function startTimer() {
+    intervalId = setInterval(() => {
+    timeRemaining--;
+    timerDisplay.textContent = timeRemaining;
+    if (timeRemaining === 0) {
+        clearInterval(intervalId);
+          timerDisplay.textContent = "Time's up!";
+          quizEnd();
+        }
+    }, 1000); // 1000 milliseconds = 1 second
+  
+  }
 
 
 // Function to display the questions for the quiz triggered by startbutton action
@@ -65,6 +88,11 @@ function checkAnswer(answer) {
     if (answer === questionsLocal[currentQuestion].correctAnswer) { /// the values are correct and variables are passing but still give me incorrect mmmm
       winCounter++;
       feedbackEl.textContent = "Correct";
+
+      if (winCounter === 2 && timeRemaining > 0) {
+        winGame();
+      }
+
     } else {
       loseCounter++;  
       feedbackEl.textContent = "Incorrect";
@@ -75,76 +103,49 @@ function checkAnswer(answer) {
     if (currentQuestion < questionsLocal.length) {
       displayQuestion();
     } else {
-    //   quizEnd();
-      alert("You finished the quiz! Your final score is: " + score);
+      quizEnd();
+    //   alert("You finished the quiz! Your final score is: " + score);
     }
 }
-// function quizEnd() {
-//     clearInterval(intervalId); 
-//     if (winCounter = 2)
-//     winGame();
+function quizEnd() {
+    clearInterval(intervalId); 
+    if (winCounter === 2)
+    winGame();
 
-//     else {
-//         loseGame();
-//     }
-// }
+    else {
+        loseGame();
+    }
+}
 
-
-
-//   // The winGame function is called when the win condition is met
-// function winGame() {
-//     feedbackEl.textContent = "YOU WON!!!🏆 ";
-//     winCounter++
-//     startButton.disabled = false;
-//     setWins()
-//   }
+  // The winGame function is called when the win condition is met
+  function winGame() {
+    feedbackResEl.textContent = "YOU WON!!!🏆 ";
+    clearInterval(intervalId);
+    timerDisplay.textContent = "You Won";
+    setWins()
+  }
   
-//   // The loseGame function is called when timer reaches 0
-//   function loseGame() {
-//     feedbackEl.textContent = "GAME OVER";
-//     loseCounter++
-//     startButton.disabled = false;
-//     setLosses()
-//   }
-
-
-function startTimer() {
-    const intervalId = setInterval(() => {
-        // Decrement the time remaining
-        timeRemaining--;
-      
-        // Update the display with the remaining time
-        timerDisplay.textContent = timeRemaining;
-      
-        // If the timer reaches zero, clear the interval
-        if (timeRemaining === 0) {
-          clearInterval(intervalId);
-          timerDisplay.textContent = "Time's up!";
-        }
-      }, 1000); // 1000 milliseconds = 1 second
-  
+  // The loseGame function is called when timer reaches 0
+  function loseGame() {
+    feedbackResEl.textContent = "GAME OVER";
+    loseCounter++
+    startButton.disabled = false;
+    setLosses()
   }
 
-//   // Updates win count on screen and sets win count to client storage
-// function setWins() {
-//     win.textContent = winCounter;
-//     localStorage.setItem("winCount", winCounter);
-//   }
+
+
+  // Updates win count on screen and sets win count to client storage
+function setWins() {
+    win.textContent = winCounter;
+    localStorage.setItem("winCount", winCounter);
+  }
   
 //   // Updates lose count on screen and sets lose count to client storage
 //   function setLosses() {
 //     lose.textContent = loseCounter;
 //     localStorage.setItem("loseCount", loseCounter);
 //   }
-
-
-function startGame() {
-   isWin = false;
-   startButton.disabled = true;
-   displayQuestion();
-   startTimer()
-  }
-
 
 
 // Event listener for the start button that will trigger displayquestion
