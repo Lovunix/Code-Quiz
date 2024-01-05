@@ -53,7 +53,7 @@ function displayQuestion() {
 
 // Function to check the answer
 function checkAnswer(answer) {
-    if (answer === questionsLocal[currentQuestion].correctAnswer) {
+    if (answer === questionsLocal[currentQuestion].correctAnswer) { /// the values are correct and variables are passing but still give me incorrect mmmm
       score++;
       alert("Correct!");
     } else {
