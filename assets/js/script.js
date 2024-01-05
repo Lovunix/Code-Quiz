@@ -1,20 +1,8 @@
-
-/// logic take from the zoom class example 
-
-// // The start Quiz Game
-// function startGame() {
-//     isWin = false;
-//     timerCount = 60;
-//     // Prevents start button from being clicked when round is in progress
-//     startButton.disabled = true;
-//     renderBlanks()
-//     startTimer()
-//   }
-
 const startButton = document.getElementById("start-button");
 const timerDisplay = document.getElementById("timer");
 const feedbackEl= document.querySelector(".feedback-answer");
 const feedbackResEl = document.querySelector(".feedback-result")
+const answerButtons = document.querySelectorAll(".answer-button");
 
 
 const questionsLocal = [
@@ -53,7 +41,8 @@ function startGame() {
     isWin = false;
     startButton.disabled = true;
     displayQuestion();
-    startTimer()
+    startTimer();
+    addButtonListeners();
    }
 
 function startTimer() {
@@ -67,6 +56,19 @@ function startTimer() {
         }
     }, 1000); // 1000 milliseconds = 1 second
   
+  }
+
+  function addButtonListeners() {
+    answerButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const selectedAnswer = button.textContent;
+        checkAnswer(selectedAnswer);
+      });
+    });
+  }
+
+  function starover() {
+    location.reload(true);
   }
 
 
@@ -88,7 +90,6 @@ function checkAnswer(answer) {
     if (answer === questionsLocal[currentQuestion].correctAnswer) { /// the values are correct and variables are passing but still give me incorrect mmmm
       winCounter++;
       feedbackEl.textContent = "Correct";
-
       if (winCounter === 2 && timeRemaining > 0) {
         winGame();
       }
@@ -98,13 +99,13 @@ function checkAnswer(answer) {
       feedbackEl.textContent = "Incorrect";
       timeRemaining -= 15;
     }
+
     currentQuestion++;
   
     if (currentQuestion < questionsLocal.length) {
       displayQuestion();
     } else {
       quizEnd();
-    //   alert("You finished the quiz! Your final score is: " + score);
     }
 }
 function quizEnd() {
@@ -122,14 +123,18 @@ function quizEnd() {
     feedbackResEl.textContent = "YOU WON!!!🏆 ";
     clearInterval(intervalId);
     timerDisplay.textContent = "You Won";
+    feedbackEl.textContent = '';
     setWins()
   }
   
   // The loseGame function is called when timer reaches 0
   function loseGame() {
+    feedbackEl.textContent = '';
     feedbackResEl.textContent = "GAME OVER";
     loseCounter++
     startButton.disabled = false;
+    startButton.textContent = "Try Again";
+    startButton.addEventListener('click', starover)
     setLosses()
   }
 
@@ -137,29 +142,20 @@ function quizEnd() {
 
   // Updates win count on screen and sets win count to client storage
 function setWins() {
+
     win.textContent = winCounter;
     localStorage.setItem("winCount", winCounter);
   }
   
-//   // Updates lose count on screen and sets lose count to client storage
-//   function setLosses() {
-//     lose.textContent = loseCounter;
-//     localStorage.setItem("loseCount", loseCounter);
-//   }
+  // Updates lose count on screen and sets lose count to client storage
+  function setLosses() {
+
+    lose.textContent = loseCounter;
+    localStorage.setItem("loseCount", loseCounter);
+  }
 
 
 // Event listener for the start button that will trigger displayquestion
 
 startButton.addEventListener("click", startGame);
 
-
-  // Event listeners for the answer buttons
-
-
-const answerButtons = document.querySelectorAll(".answer-button");
-answerButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    const selectedAnswer = button.textContent;
-    checkAnswer(selectedAnswer);
-  });
-});
