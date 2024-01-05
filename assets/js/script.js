@@ -151,7 +151,7 @@ function setRecord() {
     collquestions.textContent = " ";
     name2record = nameEl.value;
     globalREl.textContent = name2record + "  Your results will be record like this" + " Correct Answers  " + winCounter + "   " + "  Incorrect Answers " + loseCounter;
-    localStorage.setItem("Record for", name2record + "wins  " +  winCounter + "losses  " + loseCounter);
+    localStorage.setItem( name2record, name2record + " wins " +  winCounter + " losses " + loseCounter);
 
  }
 // Event listener for the start button that will trigger displayquestion
