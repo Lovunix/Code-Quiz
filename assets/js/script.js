@@ -11,6 +11,11 @@
 //     startTimer()
 //   }
 
+const startButton = document.getElementById("start-button");
+const timerDisplay = document.getElementById("timer");
+const feedbackEl= document.querySelector(".feedback-answer");
+
+
 const questionsLocal = [
     {
       question: "What is the capital of France?",
@@ -20,7 +25,7 @@ const questionsLocal = [
         c: "Berlin",
         d: "Madrid",
       },
-      correctAnswer: "Paris",
+      correctAnswer: "Paris",  ///my index is not working not sure how to call it in this case
     },
     {
       question: "What is the largest planet in our solar system?",
@@ -37,6 +42,10 @@ const questionsLocal = [
 // Variables to track question number and score
 let currentQuestion = 0;
 let score = 0;
+let timeRemaining = 60;
+let winCounter = 0;
+let loseCounter = 0;
+
 
 // Function to display the questions for the quiz triggered by startbutton action
 function displayQuestion() {
@@ -51,33 +60,101 @@ function displayQuestion() {
     });
   }
 
-// Function to check the answer
+// Function to check the answer and deduct time from wrong answer and save the wins and losses. 
 function checkAnswer(answer) {
     if (answer === questionsLocal[currentQuestion].correctAnswer) { /// the values are correct and variables are passing but still give me incorrect mmmm
-      score++;
-      alert("Correct!");
+      winCounter++;
+      feedbackEl.textContent = "Correct";
     } else {
-      alert("Incorrect!");
+      loseCounter++;  
+      feedbackEl.textContent = "Incorrect";
+      timeRemaining -= 15;
     }
-  
     currentQuestion++;
   
     if (currentQuestion < questionsLocal.length) {
       displayQuestion();
     } else {
+    //   quizEnd();
       alert("You finished the quiz! Your final score is: " + score);
     }
+}
+// function quizEnd() {
+//     clearInterval(intervalId); 
+//     if (winCounter = 2)
+//     winGame();
+
+//     else {
+//         loseGame();
+//     }
+// }
+
+
+
+//   // The winGame function is called when the win condition is met
+// function winGame() {
+//     feedbackEl.textContent = "YOU WON!!!🏆 ";
+//     winCounter++
+//     startButton.disabled = false;
+//     setWins()
+//   }
+  
+//   // The loseGame function is called when timer reaches 0
+//   function loseGame() {
+//     feedbackEl.textContent = "GAME OVER";
+//     loseCounter++
+//     startButton.disabled = false;
+//     setLosses()
+//   }
+
+
+function startTimer() {
+    const intervalId = setInterval(() => {
+        // Decrement the time remaining
+        timeRemaining--;
+      
+        // Update the display with the remaining time
+        timerDisplay.textContent = timeRemaining;
+      
+        // If the timer reaches zero, clear the interval
+        if (timeRemaining === 0) {
+          clearInterval(intervalId);
+          timerDisplay.textContent = "Time's up!";
+        }
+      }, 1000); // 1000 milliseconds = 1 second
+  
+  }
+
+//   // Updates win count on screen and sets win count to client storage
+// function setWins() {
+//     win.textContent = winCounter;
+//     localStorage.setItem("winCount", winCounter);
+//   }
+  
+//   // Updates lose count on screen and sets lose count to client storage
+//   function setLosses() {
+//     lose.textContent = loseCounter;
+//     localStorage.setItem("loseCount", loseCounter);
+//   }
+
+
+function startGame() {
+   isWin = false;
+   startButton.disabled = true;
+   displayQuestion();
+   startTimer()
   }
 
 
+
 // Event listener for the start button that will trigger displayquestion
-const startButton = document.getElementById("start-button");
-startButton.addEventListener("click", () => {
-  displayQuestion();
-});
+
+startButton.addEventListener("click", startGame);
 
 
   // Event listeners for the answer buttons
+
+
 const answerButtons = document.querySelectorAll(".answer-button");
 answerButtons.forEach((button) => {
   button.addEventListener("click", () => {
