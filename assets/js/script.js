@@ -7,6 +7,9 @@ const collquestions = document.getElementById("collapsequestions");
 const globalREl = document.querySelector(".global-results")
 const nameEl = document.getElementById("name");
 const namepEl = document.getElementById("namep");
+const buttonresEl = document.querySelector(".results-btn");
+const showresultsEl = document.querySelector(".show-results");
+const containerResEl = document.getElementById("css-results");
 
 const questionsLocal = [
     {
@@ -33,7 +36,6 @@ const questionsLocal = [
 
 // Variables to track question number and score
 let currentQuestion = 0;
-let score = 0;
 let timeRemaining = 60;
 let winCounter = 0;
 let loseCounter = 0;
@@ -151,10 +153,28 @@ function setRecord() {
     collquestions.textContent = " ";
     name2record = nameEl.value;
     globalREl.textContent = name2record + "  Your results will be record like this" + " Correct Answers  " + winCounter + "   " + "  Incorrect Answers " + loseCounter;
-    localStorage.setItem( name2record, name2record + " wins " +  winCounter + " losses " + loseCounter);
+    buttonresEl.style.display = 'initial';
+    containerResEl.style.display = 'block';
+    localStorage.setItem( "quiz" , name2record + " wins " +  winCounter + " losses " + loseCounter);
+    getRecord();
 
  }
+
+function getRecord() {
+  var storedquiz = localStorage.getItem("quiz");
+  buttonresEl.addEventListener ("click", () => {
+  showresultsEl.textContent = storedquiz;})
+  }
+
+
+
+ function getResults() {
+    var storedLosses = localStorage.getItem();
+  }
 // Event listener for the start button that will trigger displayquestion
 
 startButton.addEventListener("click", startGame);
+buttonresEl.style.display = 'none';
+containerResEl.style.display = 'none';
+
 

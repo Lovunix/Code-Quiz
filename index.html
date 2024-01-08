@@ -33,7 +33,7 @@
       <h1 class="display-5 fw-bold">Code Quiz Challenge</h1>
       <p id= namep label for="name">Please Enter your name to Record the results:</label>
         <input type="text" id="name" name="name" placeholder="Enter your name"></p>
-      <button id= "start-button" class="btn btn-primary btn-lg" type="button" data-bs-toggle="collapse" data-bs-target="#collapsequestions" aria-expanded="false" aria-controls="collapseExample">Start</button>
+      <button id= "start-button" class="btn btn-primary btn-lg" type="button" data-bs-toggle="collapse" data-bs-target="#collapsequestions" aria-expanded="false" aria-controls="collapsequestions">Start</button>
     </div>
   </div>
   
@@ -43,20 +43,27 @@
         <div class="card" style="width: 18rem;">
             <div id= "questions" class="card-header"></div>
               <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
-                <button type="button" data-bs-toggle="collapse" data-bs-target="#collapanswers" class="answer-button btn btn-outline-primary"></button>
-                <button type="button" data-bs-toggle="collapse" data-bs-target="#collapanswers" class="answer-button btn btn-outline-secondary"></button>
-                <button type="button" data-bs-toggle="collapse" data-bs-target="#collapanswers" class="answer-button btn btn-outline-success"></button>
-                <button type="button" data-bs-toggle="collapse" data-bs-target="#collapanswers"class="answer-button btn btn-outline-info"></button>
+                <button type="button" data-bs-toggle="collapse" class="answer-button btn btn-outline-primary"></button>
+                <button type="button" data-bs-toggle="collapse" class="answer-button btn btn-outline-secondary"></button>
+                <button type="button" data-bs-toggle="collapse" class="answer-button btn btn-outline-success"></button>
+                <button type="button" data-bs-toggle="collapse" class="answer-button btn btn-outline-info"></button>
               </div>
           </div>
       </div>
     </section>
-    <div class="container ">
-      <h1 class="feedback-answer"></h1>
-    </div> 
-    <div class="container">
-      <h2 class="feedback-result"></h2>
-      <h3 class="global-results"></h3>
+    <div class="container text-center">
+      <div class="card-header feedback-answer"></div>
+      <div class="card-body">
+        <h5 class="card-title feedback-result"></h5>
+        <p class="card-text global-results "></p>
+        <a href="#" class="results-btn btn btn-primary">Show results</a>
+      </div>
+    </div>
+    <div id ="css-results" class="container card border-success mb-3" style="max-width: 18rem;">
+      <div class="card-body text-success">
+        <h5 class="card-title"></h5>
+        <p class="show-results card-text"></p>
+      </div>
     </div>
     </main>
  
